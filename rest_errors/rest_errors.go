@@ -16,6 +16,15 @@ func NewError(msg string) error{
 	return errors.New(msg)
 }
 
+func NewRestError(msg string, status int, err string, causes []interface{}) *RestErr {
+	return &RestErr{
+		Message: msg,
+		Status: status,
+		Error: err,
+		Causes: causes,
+	}
+}
+
 func NewBadRequestError(message string) *RestErr {
 	return &RestErr{
 		Message: message,
@@ -29,6 +38,14 @@ func NewNotFoundError(message string) *RestErr {
 		Status: http.StatusNotFound,
 		Error: "not_found",
 	}
+}
+
+func NewUnauthorizeError(message string) *RestErr {
+	return &RestErr{
+		Message: message,
+		Status: http.StatusUnauthorized,
+		Error: "unauthorized",
+		}
 }
 
 func NewInternalServerError(message string, err error) *RestErr {
